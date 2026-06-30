@@ -1,58 +1,28 @@
-<div align="center">
-
-# 🌐 LinguaForge — Modern Localization Management Platform
-
-**Self-hosted i18n that developers actually enjoy using**
+# LinguaForge — Localization Management Platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black.svg)](https://nextjs.org/)
-</div>
 
-## 📖 What is LinguaForge?
+Self-hosted translation management. Auto-detects i18n files in six formats, tracks translation progress per locale, supports review workflows, and syncs back to your repo via CLI and CI.
 
-Self-hosted alternatives to Weblate/Lokalise are scarce. Most engineering teams dread the i18n process — JSON/YAML/.po files scattered everywhere, no review workflow, syncing between branches is painful.
-
-LinguaForge is a **DX-first** translation management platform. Auto-detect i18n files in your codebase, suggest machine translations, review workflow, and auto-sync to your repo via CI/CD.
-
-## ✨ Features
-
-- 🔍 **Auto-Scan Codebase** — Detect i18n files: JSON, YAML, .po, iOS .strings, Android XML, .properties
-- 🤖 **Machine Translation** — Google Translate / LibreTranslate API for suggestions
-- 🧠 **Translation Memory** — Reuse translations across projects
-- ✅ **Review Workflow** — Assign translators, approve/reject with comments
-- 📸 **Screenshot Context** — Upload screenshots → appears next to strings needing translation
-- 🚨 **Missing/Duplicate Key Detector** — Scan all locales, flag issues instantly
-- 📤 **Multi-Format Export** — JSON, YAML, .po, .strings, .xml
-- 🔄 **Diff View** — See what changed between versions
-- 🔧 **CLI Tool** — `linguaforge sync` in CI pipeline → auto PR with translations
-- 📊 **Dashboard** — Progress per locale, missing strings, team activity
-- 🌓 **Dark/Light Theme**
-
-## 📸 Screenshots
+## Screenshots
 
 | Translation Progress Dashboard | Multi-Locale String Table |
 |:---:|:---:|
-| ![Multi-Locale String Table](screenshots/dashboard.png) |
+| ![Translation Progress Dashboard](screenshots/hero.png) | ![Multi-Locale String Table](screenshots/dashboard.png) |
 
-> 💡 *Run locally to see the full interactive experience: `pnpm dev` then open http://localhost:3000*
+## Features
 
+- Auto-detects JSON, YAML, .po, iOS .strings, Android XML, and .properties files
+- Translation progress bars per locale with missing and duplicate key detection
+- Translation memory: suggests matches from previously translated strings
+- Review workflow: assign translators, approve or reject with comments
+- Screenshot upload for translation context
+- Machine translation suggestions via Google Translate or LibreTranslate API
+- CLI tool and CI integration: run `linguaforge sync` in a pipeline to auto-PR translations
 
-## 🏗️ Architecture
-
-```
-┌──────────────────────────────────────────────┐
-│               LinguaForge                      │
-├──────────────┬──────────────┬────────────────┤
-│   Frontend   │   Backend    │   Parsers      │
-│  Next.js 14  │  API Routes  │  JSON/YAML     │
-│  shadcn/ui   │  Prisma ORM  │  .po/.strings  │
-│  Framer      │  SQLite      │  .xml/.properties│
-│  CLI Tool    │  Git Sync    │  TM Engine     │
-└──────────────┴──────────────┴────────────────┘
-```
-
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 git clone https://github.com/adlptv/linguaforge.git
@@ -61,59 +31,56 @@ pnpm install
 pnpm dev
 ```
 
-Docker:
+Or:
 ```bash
 docker-compose up
 ```
 
-## 📊 Supported Formats
+## Architecture
+
+```
+apps/linguaforge/
+├── src/app/          # Pages: landing, projects, strings, review, export, settings
+│   └── api/          # projects, strings, import, export, scan, health
+├── src/components/   # StringEditor, LocaleTable, ReviewPanel, ScreenshotContext, UI primitives
+├── src/lib/          # Format parsers (JSON, YAML, .po, .strings, .xml, .properties), validators (Zod)
+├── prisma/           # SQLite: Project, Locale, String, Translation, TranslationMemory, User
+└── tests/
+```
+
+## Supported Formats
 
 | Format | Import | Export | Auto-Detect |
 |--------|--------|--------|-------------|
-| JSON (i18next) | ✅ | ✅ | ✅ |
-| YAML | ✅ | ✅ | ✅ |
-| .po (gettext) | ✅ | ✅ | ✅ |
-| .strings (iOS) | ✅ | ✅ | ✅ |
-| .xml (Android) | ✅ | ✅ | ✅ |
-| .properties (Java) | ✅ | ✅ | ✅ |
+| JSON (i18next) | Yes | Yes | Yes |
+| YAML | Yes | Yes | Yes |
+| .po (gettext) | Yes | Yes | Yes |
+| .strings (iOS) | Yes | Yes | Yes |
+| .xml (Android) | Yes | Yes | Yes |
+| .properties (Java) | Yes | Yes | Yes |
 
-## 🔧 CLI Usage
+## API
 
-```bash
-# Sync translations from LinguaForge to your repo
-npx linguaforge sync --project-id abc123 --token $LF_TOKEN
+| Method | Endpoint | Purpose |
+|--------|----------|---------|
+| GET/POST | /api/projects | List or create projects |
+| GET/PUT/DELETE | /api/projects/[id] | Manage a project |
+| GET/POST | /api/projects/[id]/strings | List or add strings |
+| GET/PUT/DELETE | /api/projects/[id]/strings/[sid] | Edit a string entry |
+| POST | /api/projects/[id]/import | Import i18n file |
+| GET | /api/projects/[id]/export | Export translations |
+| POST | /api/projects/[id]/scan | Scan for missing and duplicate keys |
+| GET/POST | /api/translation-memory | Translation memory entries |
+| GET | /api/health | Health check |
 
-# In CI (GitHub Actions)
-- name: Sync translations
-  run: npx linguaforge sync --token ${{ secrets.LF_TOKEN }}
-```
+## Security
 
-## 📡 API Endpoints
+- Zod validation on all routes
+- RBAC roles: admin, translator, viewer
+- API key authentication for CLI
+- Rate limiting
+- Helmet.js headers
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET/POST | `/api/projects` | List/create projects |
-| GET/PUT/DELETE | `/api/projects/[id]` | Manage project |
-| GET/POST | `/api/projects/[id]/strings` | List/add strings |
-| GET/PUT/DELETE | `/api/projects/[id]/strings/[sid]` | Edit string |
-| POST | `/api/projects/[id]/import` | Import i18n file |
-| GET | `/api/projects/[id]/export` | Export translations |
-| POST | `/api/projects/[id]/scan` | Scan for issues |
-| GET/POST | `/api/translation-memory` | TM entries |
-| GET | `/api/health` | Health check |
+## License
 
-## 🔒 Security
-
-- ✅ Zod validation all routes
-- ✅ RBAC (admin/translator/viewer)
-- ✅ API key auth for CLI
-- ✅ Rate limiting
-- ✅ Helmet.js headers
-
-## 📄 License
-
-MIT © [adlptv](https://github.com/adlptv)
-
----
-
-⭐ Star to support the project!
+MIT
