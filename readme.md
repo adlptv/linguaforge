@@ -8,9 +8,9 @@ Self-hosted translation management. Auto-detects i18n files in six formats, trac
 
 ## Screenshots
 
-| Translation Progress Dashboard | Multi-Locale String Table |
+| Landing Page (Progress) | String Editor (Locale Table) |
 |:---:|:---:|
-| ![Translation Progress Dashboard](screenshots/hero.png) | ![Multi-Locale String Table](screenshots/dashboard.png) |
+| ![String editor: multi-locale table with status badges and missing indicators](screenshots/dashboard.png) |
 
 ## Features
 

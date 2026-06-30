@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>LinguaForge</title><style>
+      body{font-family:system-ui,sans-serif;background:#0d1b1e;color:#cbd5e1;margin:0}
+      .nav{padding:16px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #164e63;background:rgba(13,27,30,.9)}
+      .logo{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px}
+      .logo span{background:linear-gradient(135deg,#14b8a6,#84cc16);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+      .hero{padding:60px 32px;max-width:1100px;margin:0 auto}
+      .hero h1{font-size:42px;font-weight:800;color:#f0fdfa;margin:0 0 16px;line-height:1.2}
+      .hero h1 span{color:#2dd4bf}
+      .hero p{font-size:15px;color:#5eead4;opacity:.7;max-width:540px;line-height:1.6;margin:0 0 24px}
+      .btn{display:inline-flex;padding:12px 28px;border-radius:8px;background:linear-gradient(135deg,#0d9488,#84cc16);color:#fff;font-weight:600;text-decoration:none}
+      .translation-table{margin-top:40px;background:#061215;border:1px solid #164e63;border-radius:12px;overflow:hidden}
+      .tt-hdr{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px;padding:12px 16px;background:#0a2428;border-bottom:1px solid #164e63;font-size:11px;font-weight:700;color:#2dd4bf;text-transform:uppercase;letter-spacing:.5px}
+      .tt-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px;padding:10px 16px;border-bottom:1px solid rgba(22,78,99,.3);font-size:12px;align-items:center}
+      .tt-key{font-family:monospace;color:#5eead4;font-size:12px}
+      .tt-en{color:#cbd5e1}.tt-id{color:#fde68a}.tt-es{color:#fca5a5}.tt-ja{color:#c4b5fd}
+      .tt-status{padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;text-align:center}
+      .status-done{background:rgba(16,185,129,.15);color:#2dd4bf}
+      .status-draft{background:rgba(245,158,11,.15);color:#fcd34d}
+      .status-miss{background:rgba(239,68,68,.15);color:#fca5a5}
+      .progress-section{padding:20px 16px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+      .progress-card{padding:14px;background:#0a2428;border-radius:8px;text-align:center}
+      .progress-card .lang{font-size:13px;font-weight:700;color:#f0fdfa;margin-bottom:6px}
+      .progress-card .bar-bg{height:6px;background:#164e63;border-radius:3px;overflow:hidden;margin-bottom:6px}
+      .progress-card .bar-fill{height:100%;border-radius:3px}
+      .bar-100{width:100%;background:#2dd4bf}.bar-78{width:78%;background:#fcd34d}.bar-55{width:55%;background:#fca5a5}.bar-32{width:32%;background:#c4b5fd}
+      .progress-card .pct{font-size:20px;font-weight:800;color:#2dd4bf}
+      .features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:0 auto;padding:60px 32px}
+      .fcard{padding:22px;background:#061215;border:1px solid #164e63;border-radius:10px}
+      .fcard h3{font-size:15px;color:#f0fdfa;margin:0 0 6px}.fcard p{font-size:13px;color:#5eead4;opacity:.6;margin:0}
+    
+.hero h1, .hero p, .btn { display: none !important; } .hero { padding: 10px 32px !important; } .features { display: none !important; } .nav { position: relative; }
+</style></head><body>
+      <nav class="nav"><div class="logo">🌐 <span>LinguaForge</span></div><div style="font-size:13px;color:#2dd4bf;opacity:.6">Project: Mobile App v2.4</div></nav>
+      <section class="hero">
+        <h1>Translate <span>Smarter.</span><br>Ship <span>Globally.</span></h1>
+        <p>Self-hosted localization management. Auto-detect 6 i18n formats, translation memory, review workflow, and CI/CD auto-sync. Built for teams that ship fast.</p>
+        <a href="#" class="btn">New Project →</a>
+        <div class="translation-table">
+          <div class="progress-section">
+            <div class="progress-card"><div class="lang">🇬🇧 English</div><div class="bar-bg"><div class="bar-fill bar-100"></div></div><div class="pct">100%</div></div>
+            <div class="progress-card"><div class="lang">🇮🇩 Indonesian</div><div class="bar-bg"><div class="bar-fill bar-78"></div></div><div class="pct">78%</div></div>
+            <div class="progress-card"><div class="lang">🇪🇸 Spanish</div><div class="bar-bg"><div class="bar-fill bar-55"></div></div><div class="pct">55%</div></div>
+            <div class="progress-card"><div class="lang">🇯🇵 Japanese</div><div class="bar-bg"><div class="bar-fill bar-32"></div></div><div class="pct">32%</div></div>
+          </div>
+          <div class="tt-hdr"><div>Key</div><div>🇬🇧 English</div><div>🇮🇩 Indonesian</div><div>🇪🇸 Spanish</div><div>🇯🇵 Japanese</div><div>Status</div></div>
+          <div class="tt-row"><div class="tt-key">welcome.title</div><div class="tt-en">Welcome back</div><div class="tt-id">Selamat datang</div><div class="tt-es">Bienvenido</div><div class="tt-ja">おかえり</div><div class="tt-status status-done">Done</div></div>
+          <div class="tt-row"><div class="tt-key">cart.checkout</div><div class="tt-en">Proceed to checkout</div><div class="tt-id">Lanjut ke pembayaran</div><div class="tt-es">Proceder al pago</div><div class="tt-ja">—</div><div class="tt-status status-draft">Draft</div></div>
+          <div class="tt-row"><div class="tt-key">error.rate_limit</div><div class="tt-en">Too many requests</div><div class="tt-id">Terlalu banyak permintaan</div><div class="tt-es">Demasiadas solicitudes</div><div class="tt-ja">—</div><div class="tt-status status-done">Done</div></div>
+          <div class="tt-row"><div class="tt-key">settings.privacy</div><div class="tt-en">Privacy Settings</div><div class="tt-id">—</div><div class="tt-es">—</div><div class="tt-ja">—</div><div class="tt-status status-miss">Missing</div></div>
+        </div>
+      </section>
+      <div class="features">
+        <div class="fcard"><h3>🔍 Auto-Scan Codebase</h3><p>Detect JSON, YAML, .po, .strings, .xml, .properties files automatically.</p></div>
+        <div class="fcard"><h3>🧠 Translation Memory</h3><p>Reuse translations across projects. Smart suggestions from your TM database.</p></div>
+        <div class="fcard"><h3>✅ Review Workflow</h3><p>Assign translators, approve/reject with inline comments and version tracking.</p></div>
+        <div class="fcard"><h3>📸 Screenshot Context</h3><p>Upload screenshots — they appear next to strings for context-aware translation.</p></div>
+        <div class="fcard"><h3>🤖 MT Suggestions</h3><p>Google Translate and LibreTranslate API integration for first-pass translations.</p></div>
+        <div class="fcard"><h3>🔧 CLI + CI Sync</h3><p>linguaforge sync in pipeline → auto-PR with the latest translations. Zero manual export.</p></div>
+      </div>
+    </body></html>
