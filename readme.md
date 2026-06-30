@@ -29,6 +29,15 @@ LinguaForge is a **DX-first** translation management platform. Auto-detect i18n 
 - 📊 **Dashboard** — Progress per locale, missing strings, team activity
 - 🌓 **Dark/Light Theme**
 
+## 📸 Screenshots
+
+| Landing Page | Dashboard |
+|:---:|:---:|
+| ![Linguaforge Hero](screenshots/hero.png) | ![Linguaforge Dashboard](screenshots/dashboard.png) |
+
+> 💡 *Run locally to see the full interactive experience: `pnpm dev` then open http://localhost:3000*
+
+
 ## 🏗️ Architecture
 
 ```
