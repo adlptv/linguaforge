@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String   @default("")
+  sourceLang  String   @default("en")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  locales     Locale[]
+  strings     String[]
+  screenshots Screenshot[]
+  auditLogs   AuditLog[]
+  users       User[]
+}
+
+model Locale {
+  id        String   @id @default(cuid())
+  code      String
+  name      String
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  translations Translation[]
+
+  @@unique([projectId, code])
+}
+
+model String {
+  id          String   @id @default(cuid())
+  key         String
+  sourceText  String
+  context     String   @default("")
+  filePath    String   @default("")
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  translations  Translation[]
+  screenshots   Screenshot[]
+
+  @@unique([projectId, key])
+}
+
+model Translation {
+  id        String   @id @default(cuid())
+  text      String
+  status    String   @default("untranslated") // untranslated | draft | approved | rejected
+  comment   String   @default("")
+  localeId  String
+  locale    Locale   @relation(fields: [localeId], references: [id], onDelete: Cascade)
+  stringId  String
+  string    String   @relation(fields: [stringId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([localeId, stringId])
+}
+
+model TranslationMemory {
+  id          String   @id @default(cuid())
+  sourceText  String
+  targetText  String
+  sourceLang  String
+  targetLang  String
+  quality     Int      @default(100)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([sourceText, sourceLang, targetLang])
+}
+
+model Screenshot {
+  id        String   @id @default(cuid())
+  filename  String
+  filePath  String
+  stringId  String?
+  string    String?  @relation(fields: [stringId], references: [id], onDelete: Cascade)
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  role      String   @default("viewer") // admin | translator | viewer
+  apiKey    String?
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  entity    String
+  entityId  String
+  details   String   @default("")
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
